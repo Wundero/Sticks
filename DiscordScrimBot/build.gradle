@@ -1,0 +1,20 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'eclipse'
+
+group = "me.wundero.DiscordScrimBot"
+version = "1.0"
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+compileJava.options.encoding = 'UTF-8'
+repositories {
+  jcenter() //This prevents issues with transitive dependencies
+  maven {
+    url  "https://jitpack.io"
+  }
+}
+dependencies {
+  compile "com.github.austinv11:Discord4J:dev-SNAPSHOT"
+}
