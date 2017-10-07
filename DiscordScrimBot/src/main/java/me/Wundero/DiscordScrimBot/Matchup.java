@@ -48,4 +48,24 @@ public class Matchup {
 		return teamTwo;
 	}
 
+	@Override
+	public boolean equals(Object other) {
+		if (!(other instanceof Matchup)) {
+			return false;
+		}
+		int otherOne = ((Matchup) other).teamOne;
+		int otherTwo = ((Matchup) other).teamTwo;
+		if (otherOne == teamOne) {
+			if (otherTwo == teamTwo) {
+				return true;
+			}
+		}
+		if (otherOne == teamTwo) {
+			if (otherTwo == teamOne) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 }

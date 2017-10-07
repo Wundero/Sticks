@@ -23,28 +23,30 @@
  */
 package me.Wundero.DiscordScrimBot;
 
-import sx.blah.discord.api.events.IListener;
-import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
-import sx.blah.discord.handle.obj.IMessage;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author Wundero
  *
  */
-public class ChatListener implements IListener<MessageReceivedEvent> {
+public class Matchups {
 
-	// TODO more advanced command handling
-	@Override
-	public void handle(MessageReceivedEvent event) {
-		IMessage msg = event.getMessage();
-		String cntnt = msg.getContent();
-		if (!cntnt.startsWith("!")) {
-			return;
+	public static final MatchupStrategy ROUND_ROBIN = new MatchupStrategy() {
+		@Override
+		public List<Matchup> createMatchups(int teamCount) {
+			if (teamCount < 1) {
+				throw new IllegalArgumentException("Must have more than 1 team!");
+			}
+			if (teamCount == 1) {
+				return Arrays.asList(new Matchup(0, 1));
+			}
+			List<Matchup> subList = createMatchups(teamCount - 1);
+			for (int i = teamCount - 1; i >= 0; i--) {
+				subList.add(new Matchup(teamCount, i));
+			}
+			return subList;
 		}
-		cntnt = cntnt.substring(1);
-		if (!cntnt.contains(" ") && cntnt.equalsIgnoreCase("scrim")) {
-			Main.get().startScrim(event.getAuthor(), event.getChannel(), 3, event.getGuild());
-		}
-	}
+	};
 
 }

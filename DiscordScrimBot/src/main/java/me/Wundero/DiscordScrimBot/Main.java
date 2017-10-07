@@ -43,8 +43,8 @@ public class Main {
 
 	private IDiscordClient client;
 
-	private Main(final String token) {
-		this.client = Utils.createClient(token, true);
+	private Main() {
+		this.client = Utils.createClient(System.getenv("sticks"), true);
 		client.changeUsername("Sticks");
 		client.changeAvatar(Image.forUrl("png", "https://puu.sh/xLCDv/447465e36f.png"));
 		client.getDispatcher().registerListener(new ChatListener());
